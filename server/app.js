@@ -8,7 +8,7 @@ const port = process.env.PORT || 3000;
 const mongoose = require('mongoose');
 const routes = require('./routes');
 
-mongoose.connect('mongodb://localhost/mini-wp', { 
+mongoose.connect(process.env.MONGOODB, { 
   useNewUrlParser: true,
   useCreateIndex: true 
 });
