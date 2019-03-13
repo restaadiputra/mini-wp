@@ -19,7 +19,6 @@ module.exports = {
       .findById(params.id)
       .then(article => {
         if(article) {
-          console.log(article)
           res.status(200).json(article)
         } else {
           res.status(404).json({
@@ -34,7 +33,7 @@ module.exports = {
     if(query && query.title) {
       filter.title = new RegExp(query.title, 'i')
     }
-    
+    console.log(filter)
     Article
       .find(filter)
       .then(function(articles) {

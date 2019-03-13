@@ -43,7 +43,6 @@ module.exports = {
         ] 
       })
       .then(function(user) {
-
         if(!user) {
           res.status(400).json({
             warning: 'Username/Password is wrong.'
@@ -54,7 +53,7 @@ module.exports = {
               warning: 'Username/Password is wrong.'
             })
           } else {
-           
+           console.log(user)
             const {_id, email, fullname } = user
             const token = jwt.sign({ 
               id: _id, email, fullname

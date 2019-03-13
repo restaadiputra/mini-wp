@@ -19,8 +19,6 @@ i {
 .container-fluid {
   letter-spacing: 0.0625em;
 }
-/* 
-nav a {
-  margin-left: 20px;
+.side-wrapper {
+  width: 70%;
 }
- */

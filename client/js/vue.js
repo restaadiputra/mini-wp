@@ -15,6 +15,8 @@ let app = new Vue({
       id: '',
       title: '',
       content: '',
+      created_at: '',
+      updated_at: '',
       status: true
     },
     articles: [],
@@ -23,8 +25,39 @@ let app = new Vue({
     register: false,
     list: false,
     editor: false
-  }, 
+  },
+  computed: {
+    
+  },
+  
   methods: {
+    timeAgo: function(second) {
+      let seconds = Math.floor((new Date(Date.now()) - new Date(second)) / 1000);
+      let interval = Math.floor(seconds / 31536000);
+      if (interval >= 1) {
+        return `${interval} year${interval === 1 ? '': 's'} ago`;
+      }
+      interval = Math.floor(seconds / 2592000);
+      if (interval >= 1) {
+        return `${interval} month${interval === 1 ? '': 's'} ago`;
+      }
+      interval = Math.floor(seconds / 86400);
+      if (interval >= 1) {
+        return `${interval} day${interval === 1 ? '': 's'} ago`;
+      }
+      interval = Math.floor(seconds / 3600);
+      if (interval >= 1) {
+        return `${interval} hour${interval === 1 ? '': 's'} ago`;
+      }
+      interval = Math.floor(seconds / 60);
+      if (interval >= 1) {
+        return `${interval} minute${interval === 1 ? '': 's'} ago`;
+      }
+      if (!!!+seconds || seconds < 30) {
+        return "a moment ago";
+      }
+      return Math.floor(seconds) + " detik yang lalu";
+    },
     getLoginState() {
       if(localStorage.getItem('token')) {
         dashboard = true
@@ -64,9 +97,23 @@ let app = new Vue({
         })
     },
     resetEditorForm() {
-      this.article.id = ''
-      this.article.title = ''
-      this.article.content = ''
+      this.article = {
+        id: '',
+        title: '',
+        content: '',
+        status: true
+      }
+    },
+    resetArticles(){
+      this.articles = []
+    },
+    resetUserForm() {
+      this.user = {
+        fullname: '',
+        username: '',
+        password: '',
+        email: ''
+      }
     },
     signin() {
       let user = {
@@ -78,6 +125,7 @@ let app = new Vue({
         .then(({ data }) => {
           localStorage.setItem('token', data.token)
           localStorage.setItem('fullname', data.fullname)
+          this.getArticles()
           this.dashboard = true
           this.login= false
         })
@@ -88,6 +136,9 @@ let app = new Vue({
       localStorage.removeItem('fullname');
       this.dashboard = false
       this.login= true
+      app.resetArticles()
+      app.resetEditorForm()
+      app.resetUserForm()
     },
     showDetailArticle(id) {
       this.article.status = true
@@ -198,9 +249,7 @@ let app = new Vue({
         .then(({ data }) => {
           this.register = false
           this.login = true
-          for(e in this.user) {
-            e = ''
-          }
+          this.resetUserForm()
         })
         .catch(err => {
           console.log(err)
@@ -209,4 +258,10 @@ let app = new Vue({
   }
 })
 
-app.getArticles()
+if(app.dashboard) {
+  app.getArticles()
+} else if(app.login || app.register) {
+  app.resetArticles()
+  app.resetEditorForm()
+  app.resetUserForm()
+} 
