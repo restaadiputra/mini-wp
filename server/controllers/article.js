@@ -40,8 +40,9 @@ module.exports = {
       })
       .catch(next)
   },
-  create({ body, decoded }, res, next) {
+  create({ file, body, decoded }, res, next) {
     body.userId = decoded.id
+    body.featured_image = file ? file.cloudStoragePublicUrl : ''
     Article
       .create({...body})
       .then(article => {
@@ -49,8 +50,9 @@ module.exports = {
       })
       .catch(next)
   },
-  update({ params, body, decoded }, res, next) {
+  update({ file, params, body, decoded }, res, next) {
     body.userId = decoded.id
+    body.featured_image = file.cloudStoragePublicUrl
     let opts = {
       new: true,
       runValidators: true,

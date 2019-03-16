@@ -13,6 +13,9 @@ const articleSchema = new Schema({
   },
   content: {
     type: String
+  },
+  featured_image: {
+    type: String
   }
 },
 { 

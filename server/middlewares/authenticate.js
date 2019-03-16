@@ -18,13 +18,13 @@ module.exports = {
             }
           } else {
             res.status(500).json({
-              message: err
+              msg: err
             })
           }
         })
       } else {
         res.status(500).json({
-          message: err
+          msg: err
         })
       }
     });
