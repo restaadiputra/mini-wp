@@ -6,8 +6,9 @@ module.exports = {
     Article
       .findById(params.id)
       .then(article => {
-        console.log('article = ',article)
-        if(decoded.id === article.userId) {
+        console.log('article = ', String(article.userId))
+        console.log('decode id = ', typeof(decoded.id))
+        if(decoded.id === String(article.userId)) {
           next()
         } else {
           res.status(401).json({

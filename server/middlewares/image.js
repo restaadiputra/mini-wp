@@ -26,7 +26,7 @@ function uploadToGCS(req, res, next) {
     return next()
   }
 
-  const gcsname = `upload/${Date.now()}-featured_image-${req.body.title}`
+  const gcsname = `upload/${Date.now()}-image-${req.body.title.split(' ').join('-')}`
   const file = bucket.file(gcsname)
 
   const stream = file.createWriteStream({
