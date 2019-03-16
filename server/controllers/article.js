@@ -33,7 +33,6 @@ module.exports = {
     if(query && query.title) {
       filter.title = new RegExp(query.title, 'i')
     }
-    console.log(filter)
     Article
       .find(filter)
       .then(function(articles) {
@@ -50,8 +49,8 @@ module.exports = {
       })
       .catch(next)
   },
-  update({ params, body }, res, next) {
-    console.log('masuk')
+  update({ params, body, decoded }, res, next) {
+    body.userId = decoded.id
     let opts = {
       new: true,
       runValidators: true,
@@ -61,6 +60,9 @@ module.exports = {
     Article
       .findOneAndUpdate({_id: params.id}, {...body}, opts)
       .then(article => {
+        if(article.userId !== body.userId) {
+          res.status(200).json
+        }
         if(article) {
           res.status(200).json(article)
         } else {

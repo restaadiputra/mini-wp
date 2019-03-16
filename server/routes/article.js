@@ -1,14 +1,15 @@
 const article = require('express').Router();
 const { ArticleController } = require('../controllers');
-const { jwt } = require('../middlewares/jwt')
+const { authenticate } = require('../middlewares/authenticate')
+const { authorize } = require('../middlewares/authorize')
 
 article
-  .use('/', jwt)
+  .use('/', authenticate)
   .get('/user', ArticleController.findOneByUser)
   .get('/', ArticleController.findAll)
   .get('/:id', ArticleController.findOne)
   .post('/', ArticleController.create)
-  .put('/:id', ArticleController.update)
-  .delete('/:id', ArticleController.delete)
+  .put('/:id', authorize, ArticleController.update)
+  .delete('/:id', authorize, ArticleController.delete)
 
 module.exports = article

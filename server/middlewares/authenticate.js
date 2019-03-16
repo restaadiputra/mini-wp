@@ -1,12 +1,12 @@
 const jwt = require('jsonwebtoken');
 const { User } = require('../models');
+const secret = process.env.JWT_SECRET
 
 module.exports = {
-  jwt: function(req, res, next) {
-    jwt.verify(req.headers.token, process.env.JWT_SECRET, function(err, decoded) {
+  authenticate(req, res, next) {
+    jwt.verify(req.headers.token, secret, (err, decoded) => {
       if (!err) {
-        
-        User.findById(decoded.id, function(err, user) {
+        User.findById(decoded.id, (err, user) => {
           if (!err) {
             if (user) {
               req.decoded = decoded
