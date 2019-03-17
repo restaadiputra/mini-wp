@@ -2,6 +2,7 @@ const { User } = require('../models');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = process.env.JWT_SECRET;
+const { googleAuth } = require('../helpers/google_auth')
 
 module.exports = {
   findAll: function(req, res, next) {
@@ -53,7 +54,6 @@ module.exports = {
               warning: 'Username/Password is wrong.'
             })
           } else {
-           console.log(user)
             const {_id, email, fullname } = user
             const token = jwt.sign({ 
               id: _id, email, fullname
@@ -63,6 +63,37 @@ module.exports = {
         }
       })
       .catch(next)
+  },
+  signInGoogle: function({ body }, res, next) {
+    googleAuth(body.id_token)
+    .then((ticket) => {
+      const { name, email } = ticket.getPayload();
+      User
+        .findOne({ email })
+        .then(user => {
+          if(!user) {
+            let newUser = new User({
+              fullname: name,
+              username: name,
+              password: '12345678',
+              email: email
+            });
+
+            newUser
+              .save()
+              .then(user => {
+                const token = jwt.sign({ id: user._id, email: user.email, fullname: user.fullname }, JWT_SECRET);
+
+                res.status(200).json({ email: user.email, fullname: user.fullname, token })
+              })
+          } else {
+            const token = jwt.sign({ id: user._id, email: user.email, fullname: user.fullname }, JWT_SECRET);
+
+            res.status(200).json({ email: user.email, fullname: user.fullname, token })
+          }
+        }).catch(next)
+    })
+    .catch(next)
   }
 
 }

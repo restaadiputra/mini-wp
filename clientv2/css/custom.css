@@ -1,0 +1,42 @@
+body {
+  color: #333;
+  background-color: #F0F0F0;
+  
+}
+
+header, main, footer {
+  padding-left: 250px;
+}
+
+@media only screen and (max-width : 992px) {
+  header, main, footer {
+    padding-left: 0;
+  }
+}
+
+@media only screen and (min-width: 601px) {
+  .container {
+    width: 90%;
+  }
+}
+
+@media only screen and (min-width: 993px) {
+  .container {
+    width: 90%;
+  }
+}
+
+.sidenav {
+  width: 250px;
+}
+
+li .row {
+  margin-bottom: 0px;
+}
+
+
+
+
+#login-page {
+  width: 500px;
+}
