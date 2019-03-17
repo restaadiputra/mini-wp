@@ -64,15 +64,11 @@ Vue.component('login-form', {
             <div class="center-align">
               Not registered?
               <a href="#" v-on:click="$emit('close-register')" >Create an account.</a>
+              <hr>
+              or use register using social media
+              <br>
+              <g-signin-button v-on:done="signInGoogle"/>
             </div>
-          </div>
-          <div class="card-content">
-          <p class="center-align">or use register using social media</p>
-
-            <g-signin-button @done="signInGoogle"/>
-              
-            <div id="g-signin-button" class="g-signin2 center-align" data-longtitle="true" data-onsuccess="signInGoogle"></div>
-           
           </div>
         </div>
       </div>

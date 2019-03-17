@@ -52,7 +52,7 @@ module.exports = {
   },
   update({ file, params, body, decoded }, res, next) {
     body.userId = decoded.id
-    body.featured_image = file.cloudStoragePublicUrl
+    body.featured_image = file ? file.cloudStoragePublicUrl : ''
     let opts = {
       new: true,
       runValidators: true,

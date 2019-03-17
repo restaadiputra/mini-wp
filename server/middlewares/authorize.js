@@ -2,12 +2,9 @@ const { Article } = require('../models');
 
 module.exports = {
   authorize({ params, decoded }, res, next) {
-    console.log(params.id)
     Article
       .findById(params.id)
       .then(article => {
-        console.log('article = ', String(article.userId))
-        console.log('decode id = ', typeof(decoded.id))
         if(decoded.id === String(article.userId)) {
           next()
         } else {

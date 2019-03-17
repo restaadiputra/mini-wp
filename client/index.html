@@ -1,300 +1,120 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 
 <head>
-  <!-- Required meta tags -->
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Mini Wordpress</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Import Google Icon Font -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-  <!-- Froala Editor CSS -->
-  <link href='https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/css/froala_editor.min.css' rel='stylesheet' type='text/css' />
-  <link href='https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/css/froala_style.min.css' rel='stylesheet' type='text/css' />
-
-  <!-- Custom styles for this template -->
-  <link rel="stylesheet" href="css/simple-sidebar.css">
-  <link rel="stylesheet" href="./css/custom.css">
-
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-  <!-- Froala Editor JS -->
-  <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/froala_editor.min.js'></script>
-
-  <!-- AXIOS -->
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <!-- Materialize CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
   <!-- Vue.Js -->
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
-  <!-- Custom JS for this template -->
-  <script src="./js/main.js"></script>
+  <!-- Axios -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
 
+  <!-- CKEditor -->
+  <script src="https://cdn.ckeditor.com/4.11.3/standard/ckeditor.js"></script>
+  
+  <!-- Google Sign In -->
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  
+  <!-- Materialize JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
-  <title>Mini WordPress</title>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="./css/materialize-social.css">
+  <link rel="stylesheet" href="./css/custom.css">
 </head>
 
 <body>
-  <!-- Wrapper -->
   <div id="app">
-    <!-- Dashboard -->
-    <div class="d-flex" id="wrapper" v-if="dashboard">
 
-      <!-- Sidebar -->
-      <div class="bg-dark text-white border-right border-dark" id="sidebar-wrapper">
-        <!-- Sidebar Heading -->
-        <div class="sidebar-heading"><i class="fab fa-wordpress"></i>Mini WordPress</div>
-
-        <!-- Sidebar Menu -->
-        <div class="list-group list-group-flush">
-          <a href="#" class="list-group-item list-group-item-action bg-dark text-white" v-on:click="getArticles">
-            <i class="far fa-newspaper"></i>Display Article
-          </a>
-          <a href="#" class="list-group-item list-group-item-action bg-dark text-white" v-on:click="getEditor(true)">
-            <i class="fas fa-file-signature"></i>Create New
-          </a>
-          <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
-            <i class="far fa-clock"></i>Activity
-          </a>
-          <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
-            <i class="fas fa-book"></i>Plan
-          </a>
-        </div>
-
-        <div class="list-group list-group-flush">
-          <button class="btn btn-danger rounded-0" id="menu-toggle-menu"><i class="fas fa-window-close"></i></i>Collapse</button>
-        </div>
-        <!-- Sidebar Menu -->
-      </div>
-      <!-- Sidebar -->
-
-      <!-- Page Content -->
-      <div id="page-content-wrapper">
-
-        <!-- Navbar -->
-        <nav id="header" class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom">
-          <!-- Toogle Sidebar -->
-          <button class="btn btn-dark rounded-0" id="menu-toggle-header"><i class="fas fa-layer-group"></i>Tools</button>
-
-          <!-- Toogle Navbar Option -->
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-  
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Option</a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="#">Profile</a>
-                  <div class="dropdown-divider"></div>
-                </div>
-              </li>
-              <li class="nav-item active">
-                <a v-on:click="signout" class="nav-link" href="#">Quit</a>
-              </li>
-            </ul>
-          </div>
-        </nav>
-        <!-- Navbar -->
-
-        <!-- main content -->
-        <div class="container-fluid p-4">
-          <main id="main-content">
-
-            <!-- list content -->
-            <div id="list-content" class="row" v-if="list">
-              <div class="col-sm-12  col-md-8">
-                <h3>Content List</h3>
-
-              </div>
-              <div class="col-sm-12 col-md-4">
-                <input v-on:input="filterByName" class="form-control ml-auto mt-2 mt-lg-0" type="text" placeholder="Search" aria-label="Search">
-              </div>
-
-              <div class="col-sm-12">
-                <p><b>All</b>12</p>
-                <div class="card">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col-sm-6">
-                        Title
-                      </div>
-                      <div class="col-sm-2">
-                        Created At
-                      </div>
-                      <div class="col-sm-2">
-                        Last Update
-                      </div>
-                      <div class="col-sm-2">
-                        Option
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Articles List -->
-                  <div class="card-body border" v-for="article in articles">
-                    <div class="row">
-                      <div class="col-sm-6">
-                        <a href="#" v-on:click="showDetailArticle(article._id)">{{ article.title }}</a>
-                      </div>
-                      <div class="col-sm-2">{{ timeAgo(article.created_at) }}</div>
-                      <div class="col-sm-2">{{ timeAgo(article.updated_at) }}</div>
-                      <div class="col-sm-2">
-                        <a href="#" class="text-danger" v-on:click="deleteArticle(article._id)"><i class="fas fa-trash-alt"></i>Delete</a>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Articles List -->
-                </div>
-              </div>
-            </div>
-            <!-- list content -->
-
-            <!-- Article Editor -->
-            <div id="editor" class="row" v-if="editor">
-              <div class="col-sm-12 ">
-                <h3 v-if="article.status">New Article</h3>
-                <h3 v-if="!article.status">Edit Article</h3>
-              </div>
-              <div class="col-sm-12">
-                <form v-on:submit.prevent="postArticle">
-                  <div class="form-group">
-                    <label for="article-title">Article Title</label>
-                    <input v-model="article.title" type="text" class="form-control" id="article-title" placeholder="Your Title">
-                  </div>
-                  <div class="form-group">
-                    <label for="article-content">Content</label>
-                    <textarea v-model="article.content" class="form-control" id="article-content" rows="7" placeholder="Your Content"></textarea>
-                  </div>
-
-                  <button v-if="article.status" type="submit" class="btn btn-primary">Create Article</button>
-                  <button v-if="!article.status" type="submit" class="btn btn-primary">Edit Article</button>
-                </form>
-              </div>
-            </div>
-            <!-- Article Editor -->
-
-          </main>
-        </div>
-        <!-- main content -->
-
-      </div>
-      <!-- Page Content -->
-
-    </div>
-    <!-- Dashboard -->
-
-    <!-- Login form -->
-    <div id="login-form" v-if="login" class="container">
-      <div class="row">
-        <div class="col-sm-12 col-md-6 col-xl-4 offset-md-3 offset-xl-4">
-          <div class="card">
-            <div class="card-body">
-              <h4 class="card-title text-center mb-4 mt-1">Sign in</h4>
-              <hr>
-              <form v-on:submit.prevent="signin">
-                <div class="form-group">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"> <i class="fa fa-user"></i> </span>
-                    </div>
-                    <input v-model="user.username" class="form-control" placeholder="Email/Username" type="text">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
-                    </div>
-                    <input v-model="user.password" class="form-control" placeholder="Password" type="password">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <button type="submit" class="btn btn-primary btn-block"> Login </button>
-                  <button v-on:click="switchForm(true)" class="btn btn-primary btn-block">Register</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div v-if="!dashboard" id="front-page">
+      <login-form 
+        v-bind:register="register" 
+        v-if="!register" 
+        v-on:close-register="closeRegister" 
+        v-on:sign-in="sighIn">
+      </login-form>
+      <register-form 
+        v-bind:register="register" 
+        v-if="register" 
+        v-on:close-register="closeRegister">
+      </register-form>
     </div>
 
-    <!-- register form -->
-    <div id="login-form" v-if="register" class="container">
-      <div class="row">
-        <div class="col-sm-12 col-md-6 col-xl-4 offset-md-3 offset-xl-4">
-          <div class="card">
-            <div class="card-body">
-              <h4 class="card-title text-center mb-4 mt-1">Sign in</h4>
-              <hr>
-              <form v-on:submit.prevent="registerUser">
-                <div class="form-group">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="fa fa-user"></i> </span>
-                    </div>
-                    <input v-model="user.fullname" class="form-control" placeholder="Fullname" type="text">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="far fa-envelope"></i></span>
-                    </div>
-                    <input v-model="user.email" class="form-control" placeholder="Email" type="email">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"> <i class="fa fa-user"></i> </span>
-                    </div>
-                    <input v-model="user.username" class="form-control" placeholder="Username" type="text">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
-                    </div>
-                    <input v-model="user.password" class="form-control" placeholder="Password" type="password">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <button type="submit" class="btn btn-primary btn-block">Register</button>
-                  <button v-on:click="switchForm(false)"  class="btn btn-danger btn-block">Cancel</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div v-if="dashboard" id="dashboard">
+      <header-dashboard 
+        v-bind:fullname="user.fullname" 
+        v-on:sign-out="signOut"
+        v-on:change-page="changePage">
+      </header-dashboard>
 
-    <!-- Login form -->
+      <!-- Main Dashboard -->
+      <main>
+        <loading v-if="load"></loading>
+
+        <article-list 
+          v-bind:articles="articles" 
+          v-on:show-detail-article="showDetailArticle"
+          v-if="page === 'list'"
+          v-on:remove="removeArticle"
+          v-on:change-page="changePage"
+          v-on:filter-article="filterArticle">
+        </article-list>
+
+        <article-editor 
+          v-bind:article="article"
+          v-if="page === 'editor'"
+          v-on:finish="loadingFinish"
+          v-on:change-page="changePage">
+        </article-editor>
+
+      </main>
+      <!-- Main Dashboard -->
+
+      <footer>
+
+      </footer>
+    </div>
 
   </div>
-  <!-- Wrapper -->
 
 
-  <!-- footer -->
-  <footer>
-
-  </footer>
-  <!-- footer -->
-
-  <script src="./js/vue.js"></script>
 
 
+
+
+
+  <!-- Materialize JavaScript -->
+
+  <!-- Custom JavaScript -->
+  <script src="./js/collapse.js"></script>
+
+  <!-- Vue Component -->
+  <script src="./js/components/article-editor.js"></script>
+  <script src="./js/components/google-auth.js"></script>
+  <script src="./js/components/article-list.js"></script>
+  <script src="./js/components/ckeditor.js"></script>
+  <script src="./js/components/header-dashboard.js"></script>
+  <script src="./js/components/login-form.js"></script>
+  <script src="./js/components/register-form.js"></script>
+
+  <!-- Vue Instance -->
+  <script src="./js/main.js"></script>
+
+
+  
 
 </body>
 

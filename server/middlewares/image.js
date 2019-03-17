@@ -1,6 +1,7 @@
 const { Storage } = require('@google-cloud/storage')
 const Multer = require('multer')
 const { Article } = require('../models')
+var path = require('path')
 
 const CLOUD_BUCKET = process.env.CLOUD_BUCKET
 
@@ -26,7 +27,7 @@ function uploadToGCS(req, res, next) {
     return next()
   }
 
-  const gcsname = `upload/${Date.now()}-image-${req.body.title.split(' ').join('-')}`
+  const gcsname = `upload/${Date.now()}-image-${req.body.title.split(' ').join('-')}.${path.extname(req.file.originalname)}`
   const file = bucket.file(gcsname)
 
   const stream = file.createWriteStream({
