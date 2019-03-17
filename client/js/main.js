@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost:3000';
+const baseUrl = 'http://miniwpserver.restadev.com';
 const token = localStorage.getItem('token');
 
 let app = new Vue({
@@ -26,10 +26,11 @@ let app = new Vue({
   methods: {
     getArticles() {
       const token = localStorage.getItem('token');
-      this.articles = []
+      
       axios
         .get(`${baseUrl}/article/user`, { headers: { token } })
         .then(({ data }) => {
+          this.articles = []
           if(data.length > 0) {
             for(index in data) {
               this.articles.push(data[index])
