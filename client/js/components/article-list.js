@@ -62,6 +62,7 @@ Vue.component('article-list', {
         })
     },
     showDetailArticle(id) {    
+      console.log(id)
       const token = localStorage.getItem('token');  
       axios
         .get(`${baseUrl}/article/${id}`, { headers: { token } })

@@ -30,6 +30,7 @@ let app = new Vue({
       axios
         .get(`${baseUrl}/article/user`, { headers: { token } })
         .then(({ data }) => {
+          console.log(data)
           this.articles = []
           if(data.length > 0) {
             for(index in data) {
